@@ -54,18 +54,18 @@ if ingredients_list:
             "SEARCH_ON"
         ].iloc[0]
 
-        st.write(
-            "The search value for ",
-            fruit_chosen,
-            " is ",
-            search_on,
-            "."
-        )
+        # st.write(
+        #   "The search value for ",
+        #   fruit_chosen,
+        #   " is ",
+        #   search_on,
+        #   "."
+        # )
 
         st.subheader(fruit_chosen + " Nutrition Information")
 
         smoothiefroot_response = requests.get(
-            "https://my.smoothiefroot.com/api/fruit/" + search_on
+            f"https://my.smoothiefroot.com/api/fruit/{search_on}"
         )
 
         st.dataframe(
