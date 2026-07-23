@@ -25,18 +25,12 @@ my_dataframe = session.table(
     col("FRUIT_NAME"),
     col("SEARCH_ON")
 )
+
 # st.dataframe(data=my_dataframe, use_container_width=True)
 # st.stop()
 
 # Convert the Snowpark DataFrame to a Pandas DataFrame
 pd_df = my_dataframe.to_pandas()
-
-st.dataframe(
-    data=my_dataframe,
-    use_container_width=True
-)
-
-st.stop()
 
 # Convert Snowflake dataframe to list
 fruit_options = [row["FRUIT_NAME"] for row in my_dataframe.collect()]
@@ -50,10 +44,10 @@ ingredients_list = st.multiselect(
 
 # If ingredients are selected, build the order
 if ingredients_list:
-    ingredients_string = ''
+    ingredients_string = ""
 
     for fruit_chosen in ingredients_list:
-        ingredients_string += fruit_chosen + ' '
+        ingredients_string += fruit_chosen + " "
 
         search_on = pd_df.loc[
             pd_df["FRUIT_NAME"] == fruit_chosen,
@@ -68,13 +62,13 @@ if ingredients_list:
             "."
         )
 
-        st.subheader(fruit_chosen + ' Nutrition Information')
+        st.subheader(fruit_chosen + " Nutrition Information")
 
         smoothiefroot_response = requests.get(
-            "https://my.smoothiefroot.com/api/fruit/" + fruit_chosen
+            "https://my.smoothiefroot.com/api/fruit/" + search_on
         )
 
-        sf_df = st.dataframe(
+        st.dataframe(
             data=smoothiefroot_response.json(),
             use_container_width=True
         )
